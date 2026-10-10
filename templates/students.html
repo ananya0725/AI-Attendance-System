@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FaceAttend | Students</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+<div class="dashboard-layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="dashboard-sidebar">
+
+        <div class="sidebar-brand">
+
+            <div class="brand-mark">
+                F
+            </div>
+
+            <div class="brand-text">
+
+                <strong>FaceAttend</strong>
+
+                <span>Attendance System</span>
+
+            </div>
+
+        </div>
+
+
+        <div class="sidebar-menu-title">
+            MAIN MENU
+        </div>
+
+
+        <nav class="dashboard-nav">
+
+            <a href="/" class="dashboard-nav-item">
+
+                <span class="nav-icon">⌂</span>
+
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a href="/attendance" class="dashboard-nav-item">
+
+                <span class="nav-icon">▤</span>
+
+                <span>Attendance</span>
+
+            </a>
+
+
+            <a href="/students" class="dashboard-nav-item active">
+
+                <span class="nav-icon">♙</span>
+
+                <span>Students</span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom-card">
+
+            <div class="online-indicator">
+
+                <span></span>
+
+                System Online
+
+            </div>
+
+            <p>
+                Face recognition engine is ready.
+            </p>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- MAIN -->
+
+    <main class="dashboard-main">
+
+
+        <!-- HEADER -->
+
+        <header class="dashboard-header">
+
+            <div>
+
+                <span class="dashboard-eyebrow">
+                    STUDENT MANAGEMENT
+                </span>
+
+                <h1>
+                    Students
+                </h1>
+
+                <p>
+                    Manage students registered for face recognition.
+                </p>
+
+            </div>
+
+
+            <div class="header-date-box">
+
+                <span>
+                    REGISTERED
+                </span>
+
+                <strong>
+                    {{ students|length }} Students
+                </strong>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- STUDENT SUMMARY -->
+
+        <section class="student-summary">
+
+            <div class="student-summary-left">
+
+                <div class="summary-blue-icon">
+                    ♙
+                </div>
+
+                <div>
+
+                    <span>
+                        REGISTERED STUDENTS
+                    </span>
+
+                    <strong>
+                        {{ students|length }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="student-summary-text">
+
+                <strong>
+                    Face profiles ready for recognition
+                </strong>
+
+                <p>
+                    These students can be automatically identified
+                    when the attendance camera is running.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- STUDENTS -->
+
+        {% if students %}
+
+        <section class="student-directory">
+
+            <div class="section-heading-row">
+
+                <div>
+
+                    <span class="dashboard-eyebrow">
+                        DIRECTORY
+                    </span>
+
+                    <h2>
+                        Registered Students
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="student-grid">
+
+                {% for student in students %}
+
+                <div class="student-profile-card">
+
+
+                    <div class="student-profile-top">
+
+                        <div class="large-student-avatar">
+
+                            {{ student[0]|upper }}
+
+                        </div>
+
+
+                        <span class="active-student-badge">
+
+                            <span></span>
+
+                            Active
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="student-profile-info">
+
+                        <h3>
+                            {{ student }}
+                        </h3>
+
+                        <p>
+                            Face profile registered
+                        </p>
+
+                    </div>
+
+
+                    <div class="student-profile-footer">
+
+                        <span>
+                            AI Recognition
+                        </span>
+
+                        <strong>
+                            ✓
+                        </strong>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+
+        {% else %}
+
+
+        <!-- EMPTY -->
+
+        <section class="empty-state">
+
+            <div class="empty-state-icon">
+                ♙
+            </div>
+
+            <h2>
+                No students registered
+            </h2>
+
+            <p>
+                Register a student's face profile to begin
+                automatic attendance.
+            </p>
+
+            <a href="/" class="empty-state-button">
+                Return to Dashboard
+            </a>
+
+        </section>
+
+        {% endif %}
+
+
+
+        <footer class="dashboard-footer">
+
+            <span>
+                FaceAttend
+            </span>
+
+            <span>
+                AI Attendance Management System
+            </span>
+
+        </footer>
+
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

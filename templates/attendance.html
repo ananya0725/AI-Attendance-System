@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FaceAttend | Attendance</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+<div class="dashboard-layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside class="dashboard-sidebar">
+
+        <div class="sidebar-brand">
+
+            <div class="brand-mark">
+                F
+            </div>
+
+            <div class="brand-text">
+
+                <strong>FaceAttend</strong>
+
+                <span>Attendance System</span>
+
+            </div>
+
+        </div>
+
+
+        <div class="sidebar-menu-title">
+            MAIN MENU
+        </div>
+
+
+        <nav class="dashboard-nav">
+
+            <a href="/" class="dashboard-nav-item">
+
+                <span class="nav-icon">⌂</span>
+
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a href="/attendance"
+               class="dashboard-nav-item active">
+
+                <span class="nav-icon">▤</span>
+
+                <span>Attendance</span>
+
+            </a>
+
+
+            <a href="/students"
+               class="dashboard-nav-item">
+
+                <span class="nav-icon">♙</span>
+
+                <span>Students</span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom-card">
+
+            <div class="online-indicator">
+
+                <span></span>
+
+                System Online
+
+            </div>
+
+            <p>
+                Face recognition engine is ready.
+            </p>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- MAIN -->
+
+    <main class="dashboard-main">
+
+
+        <!-- HEADER -->
+
+        <header class="dashboard-header">
+
+            <div>
+
+                <span class="dashboard-eyebrow">
+                    ATTENDANCE MANAGEMENT
+                </span>
+
+                <h1>
+                    Attendance
+                </h1>
+
+                <p>
+                    View and monitor automatically recorded attendance.
+                </p>
+
+            </div>
+
+
+            <div class="header-date-box">
+
+                <span>
+                    RECORDS
+                </span>
+
+                <strong>
+                    {{ attendance|length }}
+                </strong>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- SUMMARY -->
+
+        <section class="attendance-page-summary">
+
+
+            <div class="attendance-summary-item">
+
+                <div class="attendance-summary-icon blue-summary">
+                    ▤
+                </div>
+
+                <div>
+
+                    <span>
+                        TOTAL RECORDS
+                    </span>
+
+                    <strong>
+                        {{ attendance|length }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="attendance-summary-item">
+
+                <div class="attendance-summary-icon green-summary">
+                    ✓
+                </div>
+
+                <div>
+
+                    <span>
+                        STATUS
+                    </span>
+
+                    <strong class="present-text">
+                        Present
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <div class="attendance-summary-description">
+
+                <strong>
+                    Automatic attendance tracking
+                </strong>
+
+                <p>
+                    Records are created whenever a registered
+                    student is recognized by the AI system.
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- TABLE -->
+
+        <section class="attendance-table-section">
+
+
+            <div class="section-heading-row">
+
+                <div>
+
+                    <span class="dashboard-eyebrow">
+                        ATTENDANCE LOG
+                    </span>
+
+                    <h2>
+                        Attendance Records
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+
+            {% if attendance %}
+
+
+            <div class="attendance-table-wrapper">
+
+                <table class="attendance-table">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Student
+                            </th>
+
+                            <th>
+                                Date
+                            </th>
+
+                            <th>
+                                Time
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for record in attendance %}
+
+                        <tr>
+
+                            <td>
+
+                                <div class="table-student">
+
+                                    <div class="table-avatar">
+
+                                        {{ record.Name[0]|upper }}
+
+                                    </div>
+
+                                    <strong>
+                                        {{ record.Name }}
+                                    </strong>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                {{ record.Date }}
+                            </td>
+
+
+                            <td>
+                                {{ record.Time }}
+                            </td>
+
+
+                            <td>
+
+                                <span class="attendance-status">
+
+                                    <span></span>
+
+                                    {{ record.Status }}
+
+                                </span>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            {% else %}
+
+
+            <div class="empty-state">
+
+                <div class="empty-state-icon">
+                    ▤
+                </div>
+
+                <h2>
+                    No attendance records
+                </h2>
+
+                <p>
+                    Start the camera from the dashboard to
+                    automatically record attendance.
+                </p>
+
+                <a href="/" class="empty-state-button">
+                    Go to Dashboard
+                </a>
+
+            </div>
+
+
+            {% endif %}
+
+
+        </section>
+
+
+
+        <footer class="dashboard-footer">
+
+            <span>
+                FaceAttend
+            </span>
+
+            <span>
+                AI Attendance Management System
+            </span>
+
+        </footer>
+
+
+    </main>
+
+</div>
+
+</body>
+
+</html>

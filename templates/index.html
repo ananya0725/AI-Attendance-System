@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FaceAttend | Dashboard</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+<div class="dashboard-layout">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="dashboard-sidebar">
+
+        <div class="sidebar-brand">
+
+            <div class="brand-mark">
+                F
+            </div>
+
+            <div class="brand-text">
+
+                <strong>FaceAttend</strong>
+
+                <span>Attendance System</span>
+
+            </div>
+
+        </div>
+
+
+        <div class="sidebar-menu-title">
+            MAIN MENU
+        </div>
+
+
+        <nav class="dashboard-nav">
+
+            <a href="/" class="dashboard-nav-item active">
+
+                <span class="nav-icon">⌂</span>
+
+                <span>Dashboard</span>
+
+            </a>
+
+
+            <a href="/attendance" class="dashboard-nav-item">
+
+                <span class="nav-icon">▤</span>
+
+                <span>Attendance</span>
+
+            </a>
+
+
+            <a href="/students" class="dashboard-nav-item">
+
+                <span class="nav-icon">♙</span>
+
+                <span>Students</span>
+
+            </a>
+
+
+            
+        </nav>
+
+
+        <div class="sidebar-bottom-card">
+
+            <div class="online-indicator">
+
+                <span></span>
+
+                System Online
+
+            </div>
+
+            <p>
+                Face recognition engine is ready.
+            </p>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="dashboard-main">
+
+
+        <!-- HEADER -->
+
+        <header class="dashboard-header">
+
+            <div>
+
+                <span class="dashboard-eyebrow">
+                    ATTENDANCE MANAGEMENT
+                </span>
+
+                <h1>
+                    Dashboard
+                </h1>
+
+                <p>
+                    Monitor attendance and manage face recognition
+                    from one place.
+                </p>
+
+            </div>
+
+
+            <div class="header-date-box">
+
+                <span>
+                    TODAY
+                </span>
+
+                <strong id="currentDate">
+                    --
+                </strong>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             STATISTICS
+        ================================================== -->
+
+        <section class="dashboard-stats">
+
+
+            <div class="dashboard-stat-card">
+
+                <div class="stat-top">
+
+                    <span class="stat-label">
+                        Total Students
+                    </span>
+
+                    <div class="stat-symbol blue-symbol">
+                        ♙
+                    </div>
+
+                </div>
+
+                <div class="stat-number">
+                    {{ total_students }}
+                </div>
+
+                <span class="stat-description">
+                    Registered students
+                </span>
+
+            </div>
+
+
+
+            <div class="dashboard-stat-card">
+
+                <div class="stat-top">
+
+                    <span class="stat-label">
+                        Present Today
+                    </span>
+
+                    <div class="stat-symbol green-symbol">
+                        ✓
+                    </div>
+
+                </div>
+
+                <div class="stat-number">
+                    {{ present_today }}
+                </div>
+
+                <span class="stat-description">
+                    Students marked present
+                </span>
+
+            </div>
+
+
+
+            <div class="dashboard-stat-card">
+
+                <div class="stat-top">
+
+                    <span class="stat-label">
+                        Attendance Rate
+                    </span>
+
+                    <div class="stat-symbol purple-symbol">
+                        %
+                    </div>
+
+                </div>
+
+                <div class="stat-number">
+                    {{ attendance_rate }}%
+                </div>
+
+                <span class="stat-description">
+                    Today's attendance
+                </span>
+
+            </div>
+
+
+
+            <div class="dashboard-stat-card">
+
+                <div class="stat-top">
+
+                    <span class="stat-label">
+                        Recognition
+                    </span>
+
+                    <div class="stat-symbol orange-symbol">
+                        AI
+                    </div>
+
+                </div>
+
+                <div class="stat-number stat-ready">
+                    Ready
+                </div>
+
+                <span class="stat-description">
+                    Recognition engine active
+                </span>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             MAIN WORKSPACE
+        ================================================== -->
+
+        <section class="dashboard-workspace">
+
+
+            <!-- CAMERA -->
+
+            <div class="camera-panel">
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <span class="panel-label">
+                            LIVE RECOGNITION
+                        </span>
+
+                        <h2>
+                            Face Recognition
+                        </h2>
+
+                    </div>
+
+
+                    <div
+                        id="liveBadge"
+                        class="camera-live-badge"
+                        style="display:none;"
+                    >
+
+                        <span></span>
+
+                        LIVE
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="camera-screen">
+
+
+                    <div
+                        id="cameraPlaceholder"
+                        class="camera-empty"
+                    >
+
+                        <div class="camera-empty-icon">
+                            ◉
+                        </div>
+
+                        <h3>
+                            Camera Ready
+                        </h3>
+
+                        <p>
+                            Start the camera to begin automatic
+                            face recognition.
+                        </p>
+
+                    </div>
+
+
+                    <img
+                        id="cameraFeed"
+                        src=""
+                        alt="Live face recognition camera"
+                        style="display:none;"
+                    >
+
+
+                </div>
+
+
+
+                <div class="camera-actions">
+
+                    <button
+                        type="button"
+                        class="primary-camera-btn"
+                        onclick="startCamera()"
+                    >
+
+                        <span>▶</span>
+
+                        Start Camera
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="secondary-camera-btn"
+                        onclick="stopCamera()"
+                    >
+
+                        <span>■</span>
+
+                        Stop Camera
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- RECOGNITION PANEL -->
+
+            <div class="recognition-panel">
+
+
+                <div class="panel-header">
+
+                    <div>
+
+                        <span class="panel-label">
+                            SYSTEM STATUS
+                        </span>
+
+                        <h2>
+                            Recognition
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="recognition-main">
+
+
+                    <div class="recognition-circle">
+
+                        <div>
+                            AI
+                        </div>
+
+                    </div>
+
+
+                    <h3 id="recognitionTitle">
+                        Ready to scan
+                    </h3>
+
+
+                    <p id="recognitionText">
+                        Start the camera and look directly
+                        at the webcam.
+                    </p>
+
+
+                    <div class="recognition-status-row">
+
+                        <span class="status-green-dot"></span>
+
+                        <span>
+                            Recognition engine ready
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="recognition-info">
+
+                    <div>
+
+                        <span>
+                            Model
+                        </span>
+
+                        <strong>
+                            FaceNet512
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Detector
+                        </span>
+
+                        <strong>
+                            OpenCV
+                        </strong>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Storage
+                        </span>
+
+                        <strong>
+                            CSV
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             TODAY'S ATTENDANCE
+        ================================================== -->
+
+        <section class="recent-section">
+
+
+            <div class="section-heading-row">
+
+                <div>
+
+                    <span class="dashboard-eyebrow">
+                        TODAY
+                    </span>
+
+                    <h2>
+                        Attendance Overview
+                    </h2>
+
+                </div>
+
+
+                <a
+                    href="/attendance"
+                    class="view-all-link"
+                >
+                    View all attendance →
+                </a>
+
+            </div>
+
+
+            <div class="attendance-summary-card">
+
+
+                <div class="summary-icon">
+                    ✓
+                </div>
+
+
+                <div class="summary-content">
+
+                    <strong>
+                        {{ present_today }}
+                        student{% if present_today != 1 %}s{% endif %}
+                        present today
+                    </strong>
+
+                    <span>
+                        Attendance records are automatically
+                        created when a registered face is recognized.
+                    </span>
+
+                </div>
+
+
+                <div class="summary-rate">
+
+                    <strong>
+                        {{ attendance_rate }}%
+                    </strong>
+
+                    <span>
+                        Attendance
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             FEATURES
+        ================================================== -->
+
+        <section class="features-section">
+
+
+            <div class="section-heading-row">
+
+                <div>
+
+                    <span class="dashboard-eyebrow">
+                        PLATFORM
+                    </span>
+
+                    <h2>
+                        What FaceAttend does
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="feature-cards">
+
+
+                <div class="feature-card">
+
+                    <div class="feature-card-icon blue-feature">
+                        ◉
+                    </div>
+
+                    <h3>
+                        Face Recognition
+                    </h3>
+
+                    <p>
+                        Identifies registered students through
+                        AI-powered facial recognition.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-card-icon green-feature">
+                        ✓
+                    </div>
+
+                    <h3>
+                        Automatic Attendance
+                    </h3>
+
+                    <p>
+                        Marks students present automatically
+                        with date and time.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-card-icon purple-feature">
+                        ▤
+                    </div>
+
+                    <h3>
+                        Attendance Records
+                    </h3>
+
+                    <p>
+                        Maintain and review attendance records
+                        from the dedicated attendance page.
+                    </p>
+
+                </div>
+
+
+                <div class="feature-card">
+
+                    <div class="feature-card-icon orange-feature">
+                        ♙
+                    </div>
+
+                    <h3>
+                        Student Profiles
+                    </h3>
+
+                    <p>
+                        Manage registered students and their
+                        face recognition profiles.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <footer class="dashboard-footer">
+
+            <span>
+                FaceAttend
+            </span>
+
+            <span>
+                AI Attendance Management System
+            </span>
+
+        </footer>
+
+
+    </main>
+
+</div>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+====================================================== -->
+
+<script>
+
+
+const cameraFeed =
+    document.getElementById("cameraFeed");
+
+
+const cameraPlaceholder =
+    document.getElementById("cameraPlaceholder");
+
+
+const liveBadge =
+    document.getElementById("liveBadge");
+
+
+const recognitionTitle =
+    document.getElementById("recognitionTitle");
+
+
+const recognitionText =
+    document.getElementById("recognitionText");
+
+
+
+/* =====================================================
+   START CAMERA
+===================================================== */
+
+async function startCamera() {
+
+    try {
+
+        const response =
+            await fetch("/start-camera");
+
+
+        if (!response.ok) {
+
+            alert(
+                "Could not start the camera."
+            );
+
+            return;
+
+        }
+
+
+        cameraFeed.src =
+            "/video_feed?time=" +
+            new Date().getTime();
+
+
+        cameraFeed.style.display =
+            "block";
+
+
+        cameraPlaceholder.style.display =
+            "none";
+
+
+        liveBadge.style.display =
+            "flex";
+
+
+        recognitionTitle.textContent =
+            "Scanning for faces";
+
+
+        recognitionText.textContent =
+            "Look at the camera. Registered students will be recognized automatically.";
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Could not connect to the camera."
+        );
+
+    }
+
+}
+
+
+
+/* =====================================================
+   STOP CAMERA
+===================================================== */
+
+async function stopCamera() {
+
+    try {
+
+        await fetch(
+            "/stop-camera"
+        );
+
+
+        cameraFeed.src =
+            "";
+
+
+        cameraFeed.style.display =
+            "none";
+
+
+        cameraPlaceholder.style.display =
+            "flex";
+
+
+        liveBadge.style.display =
+            "none";
+
+
+        recognitionTitle.textContent =
+            "Ready to scan";
+
+
+        recognitionText.textContent =
+            "Start the camera and look directly at the webcam.";
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+    }
+
+}
+
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+const now =
+    new Date();
+
+
+document.getElementById(
+    "currentDate"
+).textContent =
+    now.toLocaleDateString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+
+</script>
+
+
+</body>
+
+</html>
